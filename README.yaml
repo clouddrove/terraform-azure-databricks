@@ -1,0 +1,63 @@
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name : Terraform AZURE DATABRICKS
+
+# License of this project
+license: "APACHE"
+
+# Canonical GitHub repo
+github_repo: clouddrove/terraform-azure-databricks
+
+# Badges to display
+badges:
+  - name: "Terraform"
+    image: "https://img.shields.io/badge/Terraform-v1.1.7-green"
+    url: "https://www.terraform.io"
+  - name: "Licence"
+    image: "https://img.shields.io/badge/License-APACHE-blue.svg"
+    url: "LICENSE.md"
+
+#  description of this project
+description: |-
+  Terraform module to create Azure databricks service resource on AZURE.
+# extra content
+include:
+  - "terraform.md"
+
+# How to use this project
+# How to use this project
+usage: |-
+  Here are some examples of how you can use this module in your inventory structure:
+  ### azure databricks
+  ```hcl
+    # Basic
+    module "databricks" {
+  source                                               = "terraform/databricks/azure"
+  version                                              = "1.0.0"
+  name                                                 = "app"
+  environment                                          = "test"
+  label_order                                          = ["name", "environment"]
+  enable                                               = true
+  resource_group_name                                  = module.resource_group.resource_group_name
+  location                                             = module.resource_group.resource_group_location
+  sku                                                  = "standard"
+  network_security_group_rules_required                = "NoAzureDatabricksRules"
+  public_network_access_enabled                        = false
+  managed_resource_group_name                          = "databricks-resource-group"
+  virtual_network_id                                   = module.vnet.vnet_id[0]
+  public_subnet_name                                   = module.subnet_pub.default_subnet_name[0]
+  private_subnet_name                                  = module.subnet_pvt.default_subnet_name[0]
+  public_subnet_network_security_group_association_id  = module.network_security_group_public.id
+  private_subnet_network_security_group_association_id = module.network_security_group_private.id
+  no_public_ip                                         = true
+  storage_account_name                                 = "databrickstestingcd"
+  }
+    ```
+
+
+
