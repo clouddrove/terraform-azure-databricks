@@ -104,6 +104,8 @@ storage_account_name                                 = "databrickstestingcd"
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| autotermination\_minutes | Set a minutes to auto terminate cluster if it's unhealthy. | `number` | n/a | yes |
+| cluster\_enable | Set to false to prevent the databricks cluster from creating it's resources. | `bool` | `false` | no |
 | enable | Set to false to prevent the module from creating any resources. | `bool` | `false` | no |
 | environment | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `""` | no |
 | label\_order | Label order, e.g. sequence of application name and environment `name`,`environment`,'attribute' [`webserver`,`qa`,`devops`,`public`,] . | `list(any)` | `[]` | no |
@@ -113,6 +115,7 @@ storage_account_name                                 = "databrickstestingcd"
 | name | Name  (e.g. `app` or `cluster`). | `string` | `""` | no |
 | network\_security\_group\_rules\_required | Does the data plane (clusters) to control plane communication happen over private link endpoint only or publicly? Possible values AllRules, NoAzureDatabricksRules or NoAzureServiceRules. Required when public\_network\_access\_enabled is set to false. | `string` | `""` | no |
 | no\_public\_ip | Select true to disble public IP. | `string` | `""` | no |
+| num\_workers | Set a Ammount of workers that needs to be created among with Databricks Cluster. | `number` | n/a | yes |
 | private\_subnet\_name | Private Subnet Name to attach with databricks. | `string` | `""` | no |
 | private\_subnet\_network\_security\_group\_association\_id | Private subnet Network security group association ID of the Virtual Network to attach with databricks. | `string` | `""` | no |
 | public\_network\_access\_enabled | Set to false to disable public Network access to the databricks. | `bool` | n/a | yes |
