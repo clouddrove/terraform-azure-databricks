@@ -2,6 +2,19 @@ provider "azurerm" {
   features {}
 }
 
+provider "databricks" {
+  azure_workspace_resource_id = module.databricks.id
+}
+
+terraform {
+  required_providers {
+    databricks = {
+      source = "databricks/databricks"
+      version = "1.9.2"
+    }
+  }
+}
+
 module "resource_group" {
   source  = "clouddrove/resource-group/azure"
   version = "1.0.0"
@@ -23,6 +36,10 @@ module "vnet" {
   location            = module.resource_group.resource_group_location
   address_space       = "10.0.0.0/16"
   enable_ddos_pp      = false
+
+  depends_on = [
+    module.resource_group
+  ]
 }
 
 module "subnet_pub" {
@@ -49,6 +66,10 @@ module "subnet_pub" {
       }
     ]
   }
+
+  depends_on = [
+    module.resource_group
+  ]
 }
 
 module "subnet_pvt" {
@@ -75,6 +96,10 @@ module "subnet_pvt" {
       }
     ]
   }
+
+  depends_on = [
+    module.resource_group
+  ]
 }
 
 module "network_security_group_public" {
@@ -109,15 +134,24 @@ module "databricks" {
   enable                                               = true
   resource_group_name                                  = module.resource_group.resource_group_name
   location                                             = module.resource_group.resource_group_location
-  sku                                                  = "standard"
-  network_security_group_rules_required                = "NoAzureDatabricksRules"
-  public_network_access_enabled                        = false
+  sku                                                  = "trial"
+  network_security_group_rules_required                = "AllRules"
+  public_network_access_enabled                        = true
   managed_resource_group_name                          = "databricks-resource-group"
   virtual_network_id                                   = module.vnet.vnet_id[0]
   public_subnet_name                                   = module.subnet_pub.default_subnet_name[0]
   private_subnet_name                                  = module.subnet_pvt.default_subnet_name[0]
   public_subnet_network_security_group_association_id  = module.network_security_group_public.id
   private_subnet_network_security_group_association_id = module.network_security_group_private.id
-  no_public_ip                                         = true
+  no_public_ip                                         = false
   storage_account_name                                 = "databrickstestingcd"
+
+  cluster_enable                                       = true
+  autotermination_minutes                              = 20
+  num_workers                                          = 1
+
+  depends_on = [
+    module.network_security_group_private,
+    module.network_security_group_public,
+  ]
 }

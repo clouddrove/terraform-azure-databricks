@@ -112,3 +112,19 @@ variable "storage_account_name" {
   default     = ""
   description = "Storage account name to attach with databricks."
 }
+
+variable "cluster_enable" {
+  type        = bool
+  default     = false
+  description = "Set to false to prevent the databricks cluster from creating it's resources."
+}
+
+variable "autotermination_minutes" {
+  type        = number
+  description = "Set a minutes to auto terminate cluster if it's unhealthy."
+}
+
+variable "num_workers" {
+  type        = number
+  description = "Set a Ammount of workers that needs to be created among with Databricks Cluster."
+}

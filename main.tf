@@ -13,7 +13,7 @@ module "labels" {
   repository  = var.repository
 }
 
-resource "azurerm_databricks_workspace" "main" {
+resource "azurerm_databricks_workspace" "this" {
 
   count                                 = var.enable == true ? 1 : 0
   name                                  = format("%s-databricks", module.labels.id)
@@ -33,4 +33,44 @@ resource "azurerm_databricks_workspace" "main" {
     no_public_ip                                         = var.no_public_ip
     storage_account_name                                 = var.storage_account_name
   }
+
+  depends_on = [
+   module.labels 
+  ]
+}
+
+data "databricks_node_type" "smallest" {
+  local_disk = true
+
+  depends_on = [
+    azurerm_databricks_workspace.this
+  ]
+}
+
+data "databricks_spark_version" "latest_lts" {
+  long_term_support = true
+
+  depends_on = [
+    azurerm_databricks_workspace.this
+  ]
+}
+
+resource "databricks_cluster" "cluster" {
+  count = var.cluster_enable == true ? 1 : 0
+  cluster_name = format("dbsc-%s",var.name,)
+
+  spark_version = data.databricks_spark_version.latest_lts.id
+  node_type_id  = data.databricks_node_type.smallest.id
+  num_workers = var.num_workers
+
+  autotermination_minutes = var.autotermination_minutes
+
+  spark_conf = {
+    "spark.databricks.cluster.profile" : "singleNode"
+    "spark.master" : "local[*]"
+  }
+
+  depends_on = [
+    azurerm_databricks_workspace.this
+  ]
 }
