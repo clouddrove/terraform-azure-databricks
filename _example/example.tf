@@ -9,7 +9,7 @@ provider "databricks" {
 terraform {
   required_providers {
     databricks = {
-      source = "databricks/databricks"
+      source  = "databricks/databricks"
       version = "1.9.2"
     }
   }
@@ -146,9 +146,15 @@ module "databricks" {
   no_public_ip                                         = false
   storage_account_name                                 = "databrickstestingcd"
 
-  cluster_enable                                       = true
-  autotermination_minutes                              = 20
-  num_workers                                          = 1
+  cluster_enable          = true
+  autotermination_minutes = 20
+  # num_workers             = 0  # Required when enable_autoscale is false
+
+  enable_autoscale = true
+  min_workers      = 1
+  max_workers      = 2
+
+  cluster_profile = "multiNode"
 
   depends_on = [
     module.network_security_group_private,

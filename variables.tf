@@ -126,5 +126,28 @@ variable "autotermination_minutes" {
 
 variable "num_workers" {
   type        = number
+  default     = 0
   description = "Set a Ammount of workers that needs to be created among with Databricks Cluster."
+}
+
+variable "enable_autoscale" {
+  type        = bool
+  default     = false
+  description = "Set to false to not enable the Autoscale feature from the cluster."
+}
+
+variable "min_workers" {
+  type        = number
+  description = "Set a Ammount of minimum workers that needs to be created among with Databricks Cluster."
+}
+
+variable "max_workers" {
+  type        = number
+  description = "Set a Ammount of maximum workers that needs to be created among with Databricks Cluster."
+}
+
+variable "cluster_profile" {
+  type        = string
+  default     = ""
+  description = "The profile that Cluster will be contain. Possible values are 'singleNode' and 'multiNode'"
 }
