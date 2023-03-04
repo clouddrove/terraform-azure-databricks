@@ -92,6 +92,17 @@ public_subnet_network_security_group_association_id  = module.network_security_g
 private_subnet_network_security_group_association_id = module.network_security_group_private.id
 no_public_ip                                         = true
 storage_account_name                                 = "databrickstestingcd"
+
+cluster_enable          = true
+autotermination_minutes = 20
+# spark_version = "11.3.x-scala2.12" # Enter manual spark version or will choose latest spark version
+# num_workers             = 0  # Required when enable_autoscale is false
+
+enable_autoscale = true
+min_workers      = 1
+max_workers      = 2
+
+cluster_profile = "multiNode"
 }
   ```
 
@@ -128,6 +139,7 @@ storage_account_name                                 = "databrickstestingcd"
 | repository | Terraform current module repo | `string` | `""` | no |
 | resource\_group\_name | The name of the resource group in which to create the virtual network. Changing this forces a new resource to be created. | `string` | `""` | no |
 | sku | The sku to use for the Databricks Workspace. Possible values are standard, premium, or trial. | `string` | `""` | no |
+| spark\_version | Enter the Spark version to to create the Databricks's Cluster. | `string` | `null` | no |
 | storage\_account\_name | Storage account name to attach with databricks. | `string` | `""` | no |
 | virtual\_network\_id | Id of the Virtual Network to attach with databricks. | `string` | `""` | no |
 
