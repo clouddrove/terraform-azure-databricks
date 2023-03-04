@@ -148,6 +148,7 @@ module "databricks" {
 
   cluster_enable          = true
   autotermination_minutes = 20
+  # spark_version = "11.3.x-scala2.12" # Enter manual spark version or will choose latest spark version
   # num_workers             = 0  # Required when enable_autoscale is false
 
   enable_autoscale = true

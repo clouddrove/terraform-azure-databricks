@@ -151,3 +151,9 @@ variable "cluster_profile" {
   default     = ""
   description = "The profile that Cluster will be contain. Possible values are 'singleNode' and 'multiNode'"
 }
+
+variable "spark_version" {
+  type        = string
+  default     = null
+  description = "Enter the Spark version to to create the Databricks's Cluster."
+}

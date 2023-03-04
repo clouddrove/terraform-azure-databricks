@@ -59,7 +59,7 @@ resource "databricks_cluster" "cluster" {
   count        = var.cluster_enable == true ? 1 : 0
   cluster_name = format("dbsc-%s", var.name, )
 
-  spark_version = data.databricks_spark_version.latest_lts.id
+  spark_version = var.spark_version != null ? var.spark_version :  data.databricks_spark_version.latest_lts.id
   node_type_id  = data.databricks_node_type.smallest.id
   num_workers   = var.enable_autoscale == true ? 0 : var.num_workers
 
