@@ -57,7 +57,7 @@ data "databricks_spark_version" "latest_lts" {
 
 resource "databricks_cluster" "cluster" {
   count        = var.cluster_enable == true ? 1 : 0
-  cluster_name = format("dbsc-%s", var.name, )
+  cluster_name = format("%s-cluster", module.labels.id)
 
   spark_version = var.spark_version != null ? var.spark_version : data.databricks_spark_version.latest_lts.id
   node_type_id  = data.databricks_node_type.smallest.id
