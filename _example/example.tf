@@ -17,7 +17,7 @@ terraform {
 
 module "resource_group" {
   source  = "clouddrove/resource-group/azure"
-  version = "1.0.0"
+  version = "1.0.2"
 
   name        = "app"
   environment = "test"
