@@ -44,7 +44,7 @@ module "vnet" {
 
 module "subnet_pub" {
   source  = "clouddrove/subnet/azure"
-  version = "1.0.1"
+  version = "1.0.2"
 
   name                 = "app"
   environment          = "test"
@@ -74,7 +74,7 @@ module "subnet_pub" {
 
 module "subnet_pvt" {
   source  = "clouddrove/subnet/azure"
-  version = "1.0.1"
+  version = "1.0.2"
 
   name                 = "app"
   environment          = "test"
