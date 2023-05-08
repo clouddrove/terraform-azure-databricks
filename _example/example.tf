@@ -54,7 +54,6 @@ module "subnet_pub" {
   virtual_network_name = join("", module.vnet.vnet_name)
 
   #subnet
-  default_name_subnet = true
   subnet_names        = ["pub-subnet"]
   subnet_prefixes     = ["10.0.1.0/24"]
 
@@ -84,7 +83,6 @@ module "subnet_pvt" {
   virtual_network_name = join("", module.vnet.vnet_name)
 
   #subnet
-  default_name_subnet = true
   subnet_names        = ["pvt-subnet"]
   subnet_prefixes     = ["10.0.2.0/24"]
 
