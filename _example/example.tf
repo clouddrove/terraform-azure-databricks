@@ -9,8 +9,7 @@ provider "databricks" {
 terraform {
   required_providers {
     databricks = {
-      source  = "databricks/databricks"
-      version = "1.14.3"
+      source = "databricks/databricks"
     }
   }
 }
@@ -27,7 +26,7 @@ module "resource_group" {
 
 module "vnet" {
   source  = "clouddrove/vnet/azure"
-  version = "1.0.1"
+  version = "1.0.2"
 
   name                = "app"
   environment         = "test"
@@ -54,8 +53,8 @@ module "subnet_pub" {
   virtual_network_name = join("", module.vnet.vnet_name)
 
   #subnet
-  subnet_names        = ["pub-subnet"]
-  subnet_prefixes     = ["10.0.1.0/24"]
+  subnet_names    = ["pub-subnet"]
+  subnet_prefixes = ["10.0.1.0/24"]
 
   delegation = {
     service_delegation = [
@@ -83,8 +82,8 @@ module "subnet_pvt" {
   virtual_network_name = join("", module.vnet.vnet_name)
 
   #subnet
-  subnet_names        = ["pvt-subnet"]
-  subnet_prefixes     = ["10.0.2.0/24"]
+  subnet_names    = ["pvt-subnet"]
+  subnet_prefixes = ["10.0.2.0/24"]
 
   delegation = {
     service_delegation = [
@@ -125,7 +124,7 @@ module "network_security_group_private" {
 }
 
 module "databricks" {
-  source                                               = "../"
+  source                                               = "clouddrove/databricks/azure"
   name                                                 = "app"
   environment                                          = "test"
   label_order                                          = ["name", "environment"]
