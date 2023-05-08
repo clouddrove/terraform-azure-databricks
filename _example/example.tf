@@ -27,7 +27,7 @@ module "resource_group" {
 
 module "vnet" {
   source  = "clouddrove/vnet/azure"
-  version = "1.0.1"
+  version = "1.0.2"
 
   name                = "app"
   environment         = "test"
@@ -83,7 +83,6 @@ module "subnet_pvt" {
   virtual_network_name = join("", module.vnet.vnet_name)
 
   #subnet
-
   subnet_names    = ["pvt-subnet"]
   subnet_prefixes = ["10.0.2.0/24"]
 
@@ -126,7 +125,7 @@ module "network_security_group_private" {
 }
 
 module "databricks" {
-  source                                               = "../"
+  source                                               = "clouddrove/databricks/azure"
   name                                                 = "app"
   environment                                          = "test"
   label_order                                          = ["name", "environment"]
