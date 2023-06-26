@@ -102,7 +102,7 @@ module "subnet_pvt" {
 module "network_security_group_public" {
   depends_on              = [module.subnet_pub]
   source                  = "clouddrove/network-security-group/azure"
-  version                 = "1.0.3"
+  version                 = "1.0.4"
   resource_group_location = module.resource_group.resource_group_location
   label_order             = ["name", "environment"]
   name                    = "app-pub"
@@ -114,7 +114,7 @@ module "network_security_group_public" {
 module "network_security_group_private" {
   depends_on              = [module.subnet_pvt]
   source                  = "clouddrove/network-security-group/azure"
-  version                 = "1.0.3"
+  version                 = "1.0.4"
   resource_group_location = module.resource_group.resource_group_location
   label_order             = ["name", "environment"]
   name                    = "app-pvt"
