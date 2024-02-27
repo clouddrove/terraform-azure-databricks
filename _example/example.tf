@@ -26,14 +26,14 @@ module "resource_group" {
 
 module "vnet" {
   source  = "clouddrove/vnet/azure"
-  version = "1.0.3"
+  version = "1.0.4"
 
   name                = "app"
   environment         = "test"
   label_order         = ["name", "environment"]
   resource_group_name = module.resource_group.resource_group_name
   location            = module.resource_group.resource_group_location
-  address_space       = "10.0.0.0/16"
+  address_spaces      = ["10.0.0.0/16"]
   enable_ddos_pp      = false
 
   depends_on = [
@@ -43,14 +43,14 @@ module "vnet" {
 
 module "subnet_pub" {
   source  = "clouddrove/subnet/azure"
-  version = "1.0.2"
+  version = "1.1.0"
 
   name                 = "app"
   environment          = "test"
   label_order          = ["name", "environment"]
   resource_group_name  = module.resource_group.resource_group_name
   location             = module.resource_group.resource_group_location
-  virtual_network_name = join("", module.vnet.vnet_name)
+  virtual_network_name = module.vnet.vnet_name
 
   #subnet
   subnet_names    = ["pub-subnet"]
@@ -72,14 +72,14 @@ module "subnet_pub" {
 
 module "subnet_pvt" {
   source  = "clouddrove/subnet/azure"
-  version = "1.0.2"
+  version = "1.1.0"
 
   name                 = "app"
   environment          = "test"
   label_order          = ["name", "environment"]
   resource_group_name  = module.resource_group.resource_group_name
   location             = module.resource_group.resource_group_location
-  virtual_network_name = join("", module.vnet.vnet_name)
+  virtual_network_name = module.vnet.vnet_name
 
   #subnet
   subnet_names    = ["pvt-subnet"]
@@ -135,7 +135,7 @@ module "databricks" {
   network_security_group_rules_required                = "AllRules"
   public_network_access_enabled                        = true
   managed_resource_group_name                          = "databricks-resource-group"
-  virtual_network_id                                   = module.vnet.vnet_id[0]
+  virtual_network_id                                   = module.vnet.vnet_id
   public_subnet_name                                   = module.subnet_pub.default_subnet_name[0]
   private_subnet_name                                  = module.subnet_pvt.default_subnet_name[0]
   public_subnet_network_security_group_association_id  = module.network_security_group_public.id
