@@ -6,14 +6,6 @@ provider "databricks" {
   azure_workspace_resource_id = module.databricks.id
 }
 
-terraform {
-  required_providers {
-    databricks = {
-      source = "databricks/databricks"
-    }
-  }
-}
-
 module "resource_group" {
   source  = "clouddrove/resource-group/azure"
   version = "1.0.2"
