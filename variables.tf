@@ -122,7 +122,7 @@ variable "cluster_enable" {
 variable "autotermination_minutes" {
   type        = number
   description = "Set a minutes to auto terminate cluster if it's unhealthy."
-  default = 20
+  default     = 20
 }
 
 variable "num_workers" {
