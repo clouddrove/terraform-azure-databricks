@@ -8,7 +8,7 @@ provider "databricks" {
 }
 
 module "databricks" {
-  source                                               = "clouddrove/databricks/azure"
+  source                                               = "../../"
   name                                                 = "app"
   environment                                          = "test"
   label_order                                          = ["name", "environment"]

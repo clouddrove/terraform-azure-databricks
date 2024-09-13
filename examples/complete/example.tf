@@ -1,6 +1,6 @@
 provider "azurerm" {
   features {}
-  subscription_id = "000000-11111-1223-XXX-XXXXXXXXXXXX"
+  subscription_id = "068245d4-3c94-42fe-9c4d-9e5e1cabc60c"
 }
 
 provider "databricks" {
@@ -117,7 +117,7 @@ module "network_security_group_private" {
 }
 
 module "databricks" {
-  source                                               = "clouddrove/databricks/azure"
+  source                                               = "../../"
   name                                                 = "app"
   environment                                          = "test"
   label_order                                          = ["name", "environment"]
