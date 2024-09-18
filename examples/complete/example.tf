@@ -1,17 +1,10 @@
 provider "azurerm" {
   features {}
+  subscription_id = "000000-11111-1223-XXX-XXXXXXXXXX"
 }
 
 provider "databricks" {
   azure_workspace_resource_id = module.databricks.id
-}
-
-terraform {
-  required_providers {
-    databricks = {
-      source = "databricks/databricks"
-    }
-  }
 }
 
 module "resource_group" {
@@ -43,7 +36,7 @@ module "vnet" {
 
 module "subnet_pub" {
   source  = "clouddrove/subnet/azure"
-  version = "1.1.0"
+  version = "1.2.1"
 
   name                 = "app"
   environment          = "test"
@@ -72,7 +65,7 @@ module "subnet_pub" {
 
 module "subnet_pvt" {
   source  = "clouddrove/subnet/azure"
-  version = "1.1.0"
+  version = "1.2.1"
 
   name                 = "app"
   environment          = "test"
@@ -124,7 +117,7 @@ module "network_security_group_private" {
 }
 
 module "databricks" {
-  source                                               = "clouddrove/databricks/azure"
+  source                                               = "../../"
   name                                                 = "app"
   environment                                          = "test"
   label_order                                          = ["name", "environment"]
