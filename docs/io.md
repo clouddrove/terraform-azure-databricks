@@ -35,4 +35,3 @@
 | Name | Description |
 |------|-------------|
 | id | Specifies the resource id of the Workspace. |
-
